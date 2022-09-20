@@ -4,7 +4,7 @@ info:
   title: API V1
   version: v1
 paths:
-  "/notebooks":
+  "/api/v1/notebooks":
     get:
       summary: list notebooks
       responses:
@@ -15,7 +15,7 @@ paths:
       responses:
         '200':
           description: successful
-  "/notebooks/{id}":
+  "/api/v1/notebooks/{id}":
     parameters:
     - name: id
       in: path
@@ -43,8 +43,60 @@ paths:
       responses:
         '200':
           description: successful
+  "/api/v1/notebooks/{notebook_id}/notes":
+    parameters:
+    - name: notebook_id
+      in: path
+      description: notebook_id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: list notes
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create note
+      responses:
+        '200':
+          description: successful
+  "/api/v1/notebooks/{notebook_id}/notes/{id}":
+    parameters:
+    - name: notebook_id
+      in: path
+      description: notebook_id
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show note
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update note
+      responses:
+        '200':
+          description: successful
+    put:
+      summary: update note
+      responses:
+        '200':
+          description: successful
+    delete:
+      summary: delete note
+      responses:
+        '200':
+          description: successful
 servers:
-- url: https://{defaultHost}
+- url: http://{defaultHost}
   variables:
     defaultHost:
-      default: www.example.com
+      default: 127.0.0.1:3000

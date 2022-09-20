@@ -1,10 +1,14 @@
+module Api
+  module V1
 class NotesController < ApplicationController
+  before_action :set_notebook, only: %i[show update destroy ]
+  before_action :set_note, only: %i[show update destroy ]
   def index
-    note = Note.all.order("created_at DESC");
+    notes = Note.all.order("created_at DESC");
     render json: {
       status: "Success",
       message: "Render Notes",
-      data: note
+      data: notes
     },status: :ok
   end
   
@@ -25,7 +29,9 @@ class NotesController < ApplicationController
   end
   
   def create
-    note = Notebook.notes.create(params_note);
+    # debugger
+    @notebook = Notebook.find(params[:notebook_id])
+    @note = @notebook.notes.create(params_note);
     if @note.save
       render json: {
         status: "Success",
@@ -70,9 +76,16 @@ class NotesController < ApplicationController
     private
       
           def params_note
-             params.require(:note).permit(:noteTitle,:note);
+             params.permit(:noteTitle,:note,:notebook_id);
           end
 
+          def set_notebook
+            @notebook = Notebook.find(params[:notebook_id])
+          end
+          def set_note
+            @note = Note.find(params[:id])
+          end
 
-
+end   
+end
 end

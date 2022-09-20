@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 2022_09_16_073903) do
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "notebooks_id", null: false
-    t.index ["notebooks_id"], name: "index_notes_on_notebooks_id"
+    t.integer "notebook_id", null: false
+    t.index ["notebook_id"], name: "index_notes_on_notebook_id"
   end
 
-  add_foreign_key "notes", "notebooks", column: "notebooks_id"
+  add_foreign_key "notes", "notebooks"
 end
